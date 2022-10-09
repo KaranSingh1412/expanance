@@ -3,6 +3,7 @@ import 'package:finance_app/provider/transaction_provider.dart';
 import 'package:finance_app/widgets/add_transaction_sheet.dart';
 import 'package:finance_app/widgets/transaction_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
  * TODO:
  * - error handling in addtransaction sheet
  * - add animation list
+ * - add multiple bank accounts
  */
 
 class HomePage extends StatefulWidget {
@@ -61,6 +63,10 @@ class _HomePageState extends State<HomePage> {
         title: Text(
           "Expanance",
           style: Theme.of(context).textTheme.titleLarge,
+        ),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Theme.of(context).appBarTheme.backgroundColor,
         ),
         actions: [
           IconButton(
