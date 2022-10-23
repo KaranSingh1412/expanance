@@ -22,10 +22,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  double totalAmount = 0.0;
-  List<String> items = ["all", "once", "monthly"];
-  String initialDropdownValue = "all";
-  List<DBTransaction> transactionList = [];
+  double totalAmount = 0.0; // the total amount
+  List<String> items = ["all", "once", "monthly"]; //item filters
+  String initialDropdownValue = "all"; //current item filter (initial)
+  List<DBTransaction> transactionList = []; //list of transactions
 
   @override
   void initState() {
@@ -40,6 +40,13 @@ class _HomePageState extends State<HomePage> {
     super.didChangeDependencies();
   }
 
+  ///opens the form for creating/adding a new transaction
+  ///
+  ///arguments to set for the transactions
+  /// - title
+  /// - amount
+  /// - date of the transaction
+  /// - the tags (monthly, once)
   void openTransactionSheet() {
     showModalBottomSheet(
       context: context,
@@ -50,6 +57,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  ///gets executed everytime something new renders on the screen
+  ///has all the important widgets to render the homepage
+  ///
+  ///@param context - is the context of the current state to the widget
   @override
   Widget build(BuildContext context) {
     final transactionProv = Provider.of<TransactionProvider>(context);
