@@ -14,7 +14,7 @@ enum TYPE {
 }
 
 class AddTransactionSheet extends StatefulWidget {
-  AddTransactionSheet({Key? key}) : super(key: key);
+  const AddTransactionSheet({Key? key}) : super(key: key);
 
   @override
   State<AddTransactionSheet> createState() => _AddTransactionSheetState();
@@ -162,11 +162,12 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
               alignment: Alignment.center,
               child: ModalButton(
                 buttonPressed: () {
+                  var amount =
+                      amountController.text.replaceAll(RegExp(r','), '.');
                   _addTransaction(
                     context,
                     titleController.text,
-                    double.parse(
-                        amountController.text.replaceAll(RegExp(r','), '.')),
+                    double.parse(amount),
                     selectedDate,
                     transactionTags,
                   );
