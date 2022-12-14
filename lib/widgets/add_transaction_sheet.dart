@@ -64,7 +64,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
     return Container(
       height: 500,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondary,
+        color: Theme.of(context).colorScheme.background,
         borderRadius: BorderRadius.only(
           topLeft: borderRadius,
           topRight: borderRadius,
