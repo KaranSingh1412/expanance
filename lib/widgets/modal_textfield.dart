@@ -44,15 +44,13 @@ class _ModalTextFieldState extends State<ModalTextField> {
             controller: widget.controller,
             onFieldSubmitted: (_) => widget.submitter,
             decoration: InputDecoration(
-              fillColor: Theme.of(context).colorScheme.primary.withRed(255),
+              fillColor: Theme.of(context).colorScheme.background,
               filled: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide.none,
               ),
               counterText: '',
-              //labelText: widget.label,
-              //labelStyle: Theme.of(context).textTheme.bodyLarge,
               hintText: widget.label,
               hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.grey.shade800,
