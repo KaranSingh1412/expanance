@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
  * - error handling in addtransaction sheet
  * - add animation list
  * - add multiple bank accounts
+ * - add app drawer
  */
 
 class HomePage extends StatefulWidget {
@@ -36,7 +37,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() {
     final transactionProv = Provider.of<TransactionProvider>(context);
-    transactionList = transactionProv.transactions;
+    transactionList =
+        transactionProv.transactions; //get the transactions from the provider
     super.didChangeDependencies();
   }
 
@@ -52,7 +54,7 @@ class _HomePageState extends State<HomePage> {
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return AddTransactionSheet();
+        return const AddTransactionSheet();
       },
     );
   }
@@ -70,28 +72,25 @@ class _HomePageState extends State<HomePage> {
           .fold(0, (value, element) => value + element);
     }
     return Scaffold(
+      //drawer: Drawer(),
       appBar: AppBar(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
+          ),
+        ),
         title: Text(
           "Expanance",
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w400,
+              ),
         ),
+        centerTitle: true,
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Theme.of(context).appBarTheme.backgroundColor,
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              /**
-               * add Code here TODO
-               */
-            },
-            icon: const Icon(
-              Icons.settings,
-              color: Colors.black,
-            ),
-          ),
-        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -104,26 +103,25 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
+          const SizedBox(
+            height: 20,
+          ),
           Align(
-            alignment: Alignment.topRight,
+            alignment: Alignment.topLeft,
             child: Padding(
-              padding: const EdgeInsets.only(right: 18.0),
+              padding: const EdgeInsets.only(left: 18.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Current balance",
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    "Transaction history",
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.normal,
+                        ),
                   ),
                   Text(
-                    "estimated",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  Text(
-                    totalAmount % 1 == 0
-                        ? '$totalAmount'
-                        : '${totalAmount.toString().split(".")[0]}.${totalAmount.toString().split(".")[1].substring(0, 2)} €',
-                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                    "${((totalAmount * 100).round() / 100).toString()} €",
+                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                           color: totalAmount < 0
                               ? Colors.red.shade700
                               : Colors.black,
@@ -131,13 +129,6 @@ class _HomePageState extends State<HomePage> {
                               ? FontWeight.w500
                               : FontWeight.normal,
                         ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Transaction history",
-                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   DropdownButton(
                     value: initialDropdownValue,
@@ -182,11 +173,20 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 )
-              : Text(
-                  "No Transactions yet",
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: Colors.grey.shade500,
-                      ),
+              : Column(
+                  children: [
+                    Icon(
+                      Icons.attach_money_rounded,
+                      color: Colors.grey.shade500,
+                      size: 60,
+                    ),
+                    Text(
+                      "No Transactions yet",
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: Colors.grey.shade500,
+                          ),
+                    ),
+                  ],
                 ),
         ],
       ),
