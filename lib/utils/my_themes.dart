@@ -11,8 +11,8 @@ class MyThemes {
       Color(0xff95EE9D); // color which is used for dialogues
 
   static ThemeData mainTheme = ThemeData(
-    colorScheme: ColorScheme.light(
-      primary: Colors.red.shade300 /*_primaryColor*/,
+    colorScheme: const ColorScheme.light(
+      primary: _primaryColor,
       onPrimary: Colors.black,
       secondary: _secondaryColor,
       background: _backgroundColor,
@@ -23,7 +23,7 @@ class MyThemes {
     snackBarTheme: const SnackBarThemeData(
       backgroundColor: _secondaryColor,
       contentTextStyle: TextStyle(
-        fontFamily: "Quicksand",
+        fontFamily: "Poppins",
         color: Colors.black,
       ),
     ),
@@ -32,8 +32,8 @@ class MyThemes {
       foregroundColor: Colors.black,
     ),
     appBarTheme: const AppBarTheme(
-      color: Colors.transparent,
-      shadowColor: Colors.transparent,
+      backgroundColor: _primaryColor,
+      //shadowColor: Colors.transparent,
     ),
     scaffoldBackgroundColor: _backgroundColor,
     listTileTheme: const ListTileThemeData(
@@ -54,13 +54,13 @@ class MyThemes {
         textStyle: MaterialStateProperty.all(
           TextStyle(
             foreground: Paint()..color = Colors.black,
-            fontFamily: "Quicksand",
+            fontFamily: "Poppins",
             fontWeight: FontWeight.w500,
           ),
         ),
       ),
     ),
-    fontFamily: "Quicksand",
+    fontFamily: "Poppins",
     inputDecorationTheme: const InputDecorationTheme(
       hintStyle: TextStyle(
         fontWeight: FontWeight.w500,

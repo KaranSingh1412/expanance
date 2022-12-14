@@ -47,3 +47,14 @@ flutter:
           weight: 700
         - asset: assets/fonts/quicksand-light.ttf
           weight: 300
+
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins-regular.ttf
+          weight: 400
+        - asset: assets/fonts/poppins-medium.ttf
+          weight: 500
+        - asset: assets/fonts/poppins-bold.ttf
+          weight: 700
+        - asset: assets/fonts/poppins-light.ttf
+          weight: 300
