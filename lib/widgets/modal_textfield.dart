@@ -44,7 +44,7 @@ class _ModalTextFieldState extends State<ModalTextField> {
             controller: widget.controller,
             onFieldSubmitted: (_) => widget.submitter,
             decoration: InputDecoration(
-              fillColor: Theme.of(context).colorScheme.background,
+              fillColor: Theme.of(context).colorScheme.secondary,
               filled: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),

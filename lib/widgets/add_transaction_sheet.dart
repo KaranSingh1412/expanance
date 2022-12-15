@@ -124,17 +124,23 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   child: Row(
                     children: [
-                      ModalButton(
+                      IconButton(
+                        onPressed: () {
+                          _selectDate(context);
+                        },
+                        icon: const Icon(Icons.calendar_month_rounded),
+                      ),
+                      /*ModalButton(
                         label: "Datetime",
                         buttonPressed: () {
                           _selectDate(context);
                         },
-                      ),
+                      ),*/
                       Text(
                         DateFormat.yMMMd().format(selectedDate),
                       ),

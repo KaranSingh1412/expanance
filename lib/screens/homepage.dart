@@ -13,6 +13,8 @@ import 'package:provider/provider.dart';
  * - add animation list
  * - add multiple bank accounts
  * - add app drawer
+ * - replace dropdown with tabbar
+ * - replace datetime button with Icon calendar button
  */
 
 class HomePage extends StatefulWidget {
@@ -71,130 +73,125 @@ class _HomePageState extends State<HomePage> {
           .map((element) => element.amount)
           .fold(0, (value, element) => value + element);
     }
-    return SafeArea(
-      child: Scaffold(
-        //drawer: Drawer(),
-        appBar: AppBar(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(15),
-              bottomRight: Radius.circular(15),
-            ),
-          ),
-          title: Text(
-            "Expanance",
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.w400,
-                ),
-          ),
-          centerTitle: true,
-          systemOverlayStyle: const SystemUiOverlayStyle(
-            systemNavigationBarColor: Colors.black,
-            statusBarColor: Colors.black,
-            statusBarBrightness: Brightness.light,
+    return Scaffold(
+      //drawer: Drawer(),
+      appBar: AppBar(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          onPressed: () {
-            openTransactionSheet();
-          },
-          child: const Icon(
-            Icons.money,
-          ),
+        title: Text(
+          "Expanance",
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w400,
+              ),
         ),
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 20,
+        centerTitle: true,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.black,
+          statusBarColor: Colors.black,
+          statusBarBrightness: Brightness.light,
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        onPressed: () {
+          openTransactionSheet();
+        },
+        child: const Icon(
+          Icons.money,
+        ),
+      ),
+      body: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 18.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Transaction history",
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.normal,
+                        ),
+                  ),
+                  Text(
+                    "${((totalAmount * 100).round() / 100).toString()} €",
+                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                          color: totalAmount < 0
+                              ? Colors.red.shade700
+                              : Colors.black,
+                          fontWeight: totalAmount < 0
+                              ? FontWeight.w500
+                              : FontWeight.normal,
+                        ),
+                  ),
+                  DropdownButton(
+                    value: initialDropdownValue,
+                    items: items
+                        .map((e) => DropdownMenuItem<String>(
+                              value: e,
+                              child: Text(e),
+                            ))
+                        .toList(),
+                    onChanged: (String? value) {
+                      setState(() {
+                        initialDropdownValue = value!;
+                        if (value == "all") {
+                          transactionList = transactionProv.transactions;
+                        } else {
+                          transactionList = transactionProv.transactions
+                              .where((element) => element.tags.contains(value))
+                              .toList();
+                        }
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 18.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          transactionProv.transactions.isNotEmpty
+              ? Expanded(
+                  child: AnimatedBuilder(
+                    animation: transactionProv,
+                    builder: (context, _) => SizedBox(
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return transactionList.isNotEmpty
+                              ? TransactionCard(
+                                  transaction: transactionList[index],
+                                )
+                              : const SizedBox();
+                        },
+                        itemCount: transactionList.length,
+                      ),
+                    ),
+                  ),
+                )
+              : Column(
                   children: [
-                    Text(
-                      "Transaction history",
-                      style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.normal,
-                              ),
+                    Icon(
+                      Icons.attach_money_rounded,
+                      color: Colors.grey.shade500,
+                      size: 60,
                     ),
                     Text(
-                      "${((totalAmount * 100).round() / 100).toString()} €",
-                      style:
-                          Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                color: totalAmount < 0
-                                    ? Colors.red.shade700
-                                    : Colors.black,
-                                fontWeight: totalAmount < 0
-                                    ? FontWeight.w500
-                                    : FontWeight.normal,
-                              ),
-                    ),
-                    DropdownButton(
-                      value: initialDropdownValue,
-                      items: items
-                          .map((e) => DropdownMenuItem<String>(
-                                value: e,
-                                child: Text(e),
-                              ))
-                          .toList(),
-                      onChanged: (String? value) {
-                        setState(() {
-                          initialDropdownValue = value!;
-                          if (value == "all") {
-                            transactionList = transactionProv.transactions;
-                          } else {
-                            transactionList = transactionProv.transactions
-                                .where(
-                                    (element) => element.tags.contains(value))
-                                .toList();
-                          }
-                        });
-                      },
+                      "No Transactions yet",
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: Colors.grey.shade500,
+                          ),
                     ),
                   ],
                 ),
-              ),
-            ),
-            transactionProv.transactions.isNotEmpty
-                ? Expanded(
-                    child: AnimatedBuilder(
-                      animation: transactionProv,
-                      builder: (context, _) => SizedBox(
-                        child: ListView.builder(
-                          itemBuilder: (context, index) {
-                            return transactionList.isNotEmpty
-                                ? TransactionCard(
-                                    transaction: transactionList[index],
-                                  )
-                                : const SizedBox();
-                          },
-                          itemCount: transactionList.length,
-                        ),
-                      ),
-                    ),
-                  )
-                : Column(
-                    children: [
-                      Icon(
-                        Icons.attach_money_rounded,
-                        color: Colors.grey.shade500,
-                        size: 60,
-                      ),
-                      Text(
-                        "No Transactions yet",
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: Colors.grey.shade500,
-                            ),
-                      ),
-                    ],
-                  ),
-          ],
-        ),
+        ],
       ),
     );
   }

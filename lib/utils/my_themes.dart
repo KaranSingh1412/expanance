@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyThemes {
-  static const Color _primaryColor = Color(0xffbad7f2);
+  static const Color _primaryColor = Color.fromRGBO(186, 215, 255, 1);
   // the nice dark-light blue color
   static const Color _secondaryColor = Color(0xffbaf2d8);
   // the nice light blue color
