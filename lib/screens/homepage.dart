@@ -90,6 +90,7 @@ class _HomePageState extends State<HomePage> {
         systemOverlayStyle: const SystemUiOverlayStyle(
           systemNavigationBarColor: Colors.black,
           statusBarColor: Colors.black,
+          statusBarBrightness: Brightness.light,
         ),
       ),
       floatingActionButton: FloatingActionButton(
