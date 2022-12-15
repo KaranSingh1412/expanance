@@ -87,8 +87,9 @@ class _HomePageState extends State<HomePage> {
               ),
         ),
         centerTitle: true,
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         systemOverlayStyle: SystemUiOverlayStyle(
+          systemNavigationBarColor:
+              Theme.of(context).appBarTheme.backgroundColor,
           statusBarColor: Theme.of(context).appBarTheme.backgroundColor,
         ),
       ),
