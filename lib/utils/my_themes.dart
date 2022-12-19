@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 class MyThemes {
-  static const Color _primaryColor = Color.fromRGBO(186, 215, 255, 1);
+  static const Color _primaryColor = Color.fromRGBO(25, 0, 51, 1);
   // the nice dark-light blue color
-  static const Color _secondaryColor = Color(0xffbaf2d8);
+  static const Color _secondaryColor = Color.fromRGBO(222, 0, 101, 1);
   // the nice light blue color
-  static const Color _backgroundColor =
-      Color(0xffbaf2bb); // actual background color of the app
+  static const Color _backgroundColor = Color.fromRGBO(4, 2, 18, 1);
+  //Color(0xffbaf2bb); // actual background color of the app
   static const Color _surfaceColor =
-      Color(0xff95EE9D); // color which is used for dialogues
+      Color.fromRGBO(32, 25, 77, 1); // color which is used for dialogues
 
   static ThemeData mainTheme = ThemeData(
     colorScheme: const ColorScheme.light(
       primary: _primaryColor,
-      onPrimary: Colors.black,
+      onPrimary: Colors.white,
       secondary: _secondaryColor,
       background: _backgroundColor,
       shadow: Colors.transparent,
@@ -24,12 +24,12 @@ class MyThemes {
       backgroundColor: _secondaryColor,
       contentTextStyle: TextStyle(
         fontFamily: "Poppins",
-        color: Colors.black,
+        color: Colors.white,
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: _primaryColor,
-      foregroundColor: Colors.black,
+      foregroundColor: Colors.white,
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: _primaryColor,
@@ -39,7 +39,7 @@ class MyThemes {
     listTileTheme: const ListTileThemeData(
       iconColor: _primaryColor,
     ),
-    iconTheme: const IconThemeData(color: Colors.black, size: 30),
+    iconTheme: const IconThemeData(color: Colors.white, size: 30),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: const TextStyle(
@@ -53,7 +53,7 @@ class MyThemes {
         foregroundColor: MaterialStateProperty.all(Colors.black),
         textStyle: MaterialStateProperty.all(
           TextStyle(
-            foreground: Paint()..color = Colors.black,
+            foreground: Paint()..color = Colors.white,
             fontFamily: "Poppins",
             fontWeight: FontWeight.w500,
           ),
@@ -80,8 +80,8 @@ class MyThemes {
       labelMedium: TextStyle(foreground: Paint()..color = _secondaryColor),
       labelSmall: TextStyle(foreground: Paint()..color = _secondaryColor),
     ).apply(
-      displayColor: Colors.black,
-      bodyColor: Colors.black,
+      displayColor: Colors.white,
+      bodyColor: Colors.white,
     ),
   );
 }
