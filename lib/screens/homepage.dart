@@ -1,6 +1,7 @@
 import 'package:finance_app/models/db_models/db_transaction.dart';
 import 'package:finance_app/provider/transaction_provider.dart';
 import 'package:finance_app/widgets/add_transaction_sheet.dart';
+import 'package:finance_app/widgets/custom_tabbar.dart';
 import 'package:finance_app/widgets/transaction_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,8 @@ import 'package:provider/provider.dart';
  * - add app drawer
  * - replace dropdown with tabbar
  * - replace datetime button with Icon calendar button
+ * - addTags functionality
+ * - rework transactiontype_button.dart
  */
 
 class HomePage extends StatefulWidget {
@@ -112,7 +115,7 @@ class _HomePageState extends State<HomePage> {
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 18.0),
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -133,7 +136,24 @@ class _HomePageState extends State<HomePage> {
                               : FontWeight.normal,
                         ),
                   ),
-                  DropdownButton(
+                  CustomTabbar(
+                    onChanged: () {
+                      /*setState(
+                        () {
+                          initialDropdownValue = value!;
+                          if (value == "all") {
+                            transactionList = transactionProv.transactions;
+                          } else {
+                            transactionList = transactionProv.transactions
+                                .where(
+                                    (element) => element.tags.contains(value))
+                                .toList();
+                          }
+                        },
+                      );*/
+                    },
+                  ),
+                  /*DropdownButton(
                     value: initialDropdownValue,
                     items: items
                         .map((e) => DropdownMenuItem<String>(
@@ -142,18 +162,21 @@ class _HomePageState extends State<HomePage> {
                             ))
                         .toList(),
                     onChanged: (String? value) {
-                      setState(() {
-                        initialDropdownValue = value!;
-                        if (value == "all") {
-                          transactionList = transactionProv.transactions;
-                        } else {
-                          transactionList = transactionProv.transactions
-                              .where((element) => element.tags.contains(value))
-                              .toList();
-                        }
-                      });
+                      setState(
+                        () {
+                          initialDropdownValue = value!;
+                          if (value == "all") {
+                            transactionList = transactionProv.transactions;
+                          } else {
+                            transactionList = transactionProv.transactions
+                                .where(
+                                    (element) => element.tags.contains(value))
+                                .toList();
+                          }
+                        },
+                      );
                     },
-                  ),
+                  ),*/
                 ],
               ),
             ),
