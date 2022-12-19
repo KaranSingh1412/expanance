@@ -1,4 +1,5 @@
 import 'package:finance_app/models/db_models/db_transaction.dart';
+import 'package:finance_app/provider/defined_tags_provider.dart';
 import 'package:finance_app/provider/transaction_provider.dart';
 import 'package:finance_app/screens/homepage.dart';
 import 'package:finance_app/utils/my_themes.dart';
@@ -8,8 +9,8 @@ import 'package:provider/provider.dart';
 
 void main() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(DBTransactionAdapter());
-  await Hive.openBox<DBTransaction>("transactions");
+  await TransactionProvider.createTransactionBox();
+  await DefinedTagsProvider.createDefinedTagsBox();
   runApp(const MyApp());
 }
 
@@ -18,7 +19,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => TransactionProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => TransactionProvider()),
+        ChangeNotifierProvider(create: (_) => DefinedTagsProvider()),
+      ],
       builder: (context, _) => MaterialApp(
         title: 'Expanance',
         debugShowCheckedModeBanner: false,
