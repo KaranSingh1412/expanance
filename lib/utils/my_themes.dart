@@ -35,6 +35,10 @@ class MyThemes {
       backgroundColor: _primaryColor,
       //shadowColor: Colors.transparent,
     ),
+    navigationBarTheme: const NavigationBarThemeData(
+      backgroundColor: _primaryColor,
+      indicatorColor: _secondaryColor,
+    ),
     scaffoldBackgroundColor: _backgroundColor,
     listTileTheme: const ListTileThemeData(
       iconColor: _primaryColor,
