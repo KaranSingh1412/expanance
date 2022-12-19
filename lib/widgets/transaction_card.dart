@@ -1,5 +1,6 @@
 import 'package:finance_app/models/db_models/db_transaction.dart';
 import 'package:finance_app/provider/transaction_provider.dart';
+import 'package:finance_app/widgets/tag_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,9 @@ class TransactionCard extends StatelessWidget {
     return Card(
       color: Theme.of(context).colorScheme.primary,
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       elevation: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -56,31 +60,8 @@ class TransactionCard extends StatelessWidget {
                         icon: const Icon(Icons.delete_forever),
                         splashRadius: 20,
                       ),
-                      ...transaction.tags.map((element) {
-                        return SizedBox(
-                          child: Card(
-                            color: Theme.of(context).colorScheme.primary,
-                            elevation: 8,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 3.0,
-                                horizontal: 10,
-                              ),
-                              child: Text(
-                                element,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
+                      ...transaction.tags.map((tagLabel) {
+                        return TagChip(label: tagLabel);
                       }),
                     ],
                   ),

@@ -44,7 +44,7 @@ class _ModalTextFieldState extends State<ModalTextField> {
             controller: widget.controller,
             onFieldSubmitted: (_) => widget.submitter,
             decoration: InputDecoration(
-              fillColor: Theme.of(context).colorScheme.secondary,
+              fillColor: Theme.of(context).colorScheme.surface,
               filled: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -52,9 +52,7 @@ class _ModalTextFieldState extends State<ModalTextField> {
               ),
               counterText: '',
               hintText: widget.label,
-              hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Colors.grey.shade800,
-                  ),
+              hintStyle: Theme.of(context).textTheme.bodyLarge,
               icon: Padding(
                 padding: const EdgeInsets.only(
                   left: 10.0,
@@ -63,7 +61,7 @@ class _ModalTextFieldState extends State<ModalTextField> {
                 ),
                 child: Icon(
                   widget.icon,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             ),

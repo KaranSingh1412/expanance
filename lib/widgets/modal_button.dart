@@ -13,13 +13,12 @@ class ModalButton extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(
         right: 8.0,
-        left: 8.0,
         bottom: 8.0,
         top: 10,
       ),
       child: Card(
         elevation: 10.0,
-        color: Theme.of(context).colorScheme.primary,
+        color: Theme.of(context).colorScheme.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),

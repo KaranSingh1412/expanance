@@ -98,25 +98,25 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                     children: [
                       TransactionTypeButton(
                         backgroundColor: transactionType == TYPE.incoming
-                            ? Theme.of(context).colorScheme.primary
+                            ? Theme.of(context).colorScheme.surface
                             : Colors.transparent,
                         buttonPressed: () {
                           setState(() {
                             transactionType = TYPE.incoming;
                           });
                         },
-                        label: "Incoming",
+                        label: "+",
                       ),
                       TransactionTypeButton(
                         backgroundColor: transactionType == TYPE.outgoing
-                            ? Theme.of(context).colorScheme.primary
+                            ? Theme.of(context).colorScheme.surface
                             : Colors.transparent,
                         buttonPressed: () {
                           setState(() {
                             transactionType = TYPE.outgoing;
                           });
                         },
-                        label: "Outgoing",
+                        label: "-",
                       ),
                     ],
                   ),
@@ -135,12 +135,6 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                         },
                         icon: const Icon(Icons.calendar_month_rounded),
                       ),
-                      /*ModalButton(
-                        label: "Datetime",
-                        buttonPressed: () {
-                          _selectDate(context);
-                        },
-                      ),*/
                       Text(
                         DateFormat.yMMMd().format(selectedDate),
                       ),

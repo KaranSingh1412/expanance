@@ -1,3 +1,5 @@
+/// the button in the add_transaction_sheet for adding tags to a transaction
+///
 import 'package:flutter/material.dart';
 
 class TagCircle extends StatefulWidget {
@@ -28,7 +30,7 @@ class _TagCircleState extends State<TagCircle> {
           } else {
             setState(() {
               widget.tagList.add(widget.label);
-              backgroundColor = Theme.of(context).colorScheme.primary;
+              backgroundColor = Theme.of(context).colorScheme.surface;
             });
           }
         },
@@ -37,14 +39,14 @@ class _TagCircleState extends State<TagCircle> {
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18),
               side: BorderSide(
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.surface,
                 width: 3,
               ),
             ),
           ),
           backgroundColor: MaterialStateProperty.all<Color>(
             widget.tagList.contains(widget.label)
-                ? Theme.of(context).colorScheme.primary
+                ? Theme.of(context).colorScheme.surface
                 : backgroundColor,
           ),
         ),

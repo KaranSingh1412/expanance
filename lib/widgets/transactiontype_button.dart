@@ -28,7 +28,7 @@ class _TransactionTypeButtonState extends State<TransactionTypeButton> {
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18),
               side: BorderSide(
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.surface,
                 width: 3,
               ),
             ),
@@ -38,7 +38,7 @@ class _TransactionTypeButtonState extends State<TransactionTypeButton> {
         ),
         child: Text(
           widget.label,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
     );
