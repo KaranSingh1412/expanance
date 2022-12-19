@@ -21,7 +21,7 @@ flutter_icons:
   web:
     generate: true
     image_path: "assets/images/1024.png"
-    background_color: "#BAF2BB"
+    background_color: "#190033"
 
 dev_dependencies:
   flutter_test:
