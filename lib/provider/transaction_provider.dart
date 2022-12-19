@@ -3,18 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 
 class TransactionProvider extends ChangeNotifier {
-  //List<DBTransaction> _transactionList = [];
-
-  /*List<dynamic> get transactions {
-    return _transactionList.reversed.toList();
-  }*/
-
   List<DBTransaction> get transactions {
     return Hive.box<DBTransaction>("transactions")
         .values
         .toList()
         .reversed
         .toList();
+  }
+
+  static Future<void> createTransactionBox() async {
+    Hive.registerAdapter(DBTransactionAdapter());
+    await Hive.openBox<DBTransaction>("transactions");
   }
 
   void addTransaction(DBTransaction transaction) {
