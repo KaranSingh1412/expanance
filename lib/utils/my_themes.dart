@@ -33,8 +33,9 @@ class MyThemes {
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: _primaryColor,
-      //shadowColor: Colors.transparent,
+      shadowColor: Colors.transparent,
     ),
+    bottomAppBarTheme: const BottomAppBarTheme(color: _backgroundColor),
     navigationBarTheme: const NavigationBarThemeData(
       backgroundColor: _primaryColor,
       indicatorColor: _secondaryColor,
