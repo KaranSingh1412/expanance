@@ -1,15 +1,17 @@
 import 'package:finance_app/provider/defined_tags_provider.dart';
+import 'package:finance_app/provider/transaction_provider.dart';
+import 'package:finance_app/screens/homepage.dart';
 import 'package:finance_app/widgets/modal_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CustomTabbar extends StatelessWidget {
-  const CustomTabbar({Key? key, required this.onChanged}) : super(key: key);
-  final void Function() onChanged;
+  const CustomTabbar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final definedTagsProv = Provider.of<DefinedTagsProvider>(context);
+    final transactionProv = Provider.of<TransactionProvider>(context);
     return SizedBox(
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -17,10 +19,20 @@ class CustomTabbar extends StatelessWidget {
           children: [
             Row(
               children: [
+                ModalButton(
+                  buttonPressed: () {
+                    HomePage.transactionList = transactionProv.transactions;
+                  },
+                  label: "all",
+                ),
                 ...definedTagsProv.definedTags.map(
                   (tab) {
                     return ModalButton(
-                      buttonPressed: onChanged,
+                      buttonPressed: () {
+                        HomePage.transactionList = transactionProv.transactions
+                            .where((element) => element.tags.contains(tab))
+                            .toList();
+                      },
                       label: tab,
                     );
                   },

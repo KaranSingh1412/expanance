@@ -11,7 +11,7 @@ class MyThemes {
       Color.fromRGBO(32, 25, 77, 1); // color which is used for dialogues
 
   static ThemeData mainTheme = ThemeData(
-    colorScheme: const ColorScheme.light(
+    colorScheme: const ColorScheme.dark(
       primary: _primaryColor,
       onPrimary: Colors.white,
       secondary: _secondaryColor,

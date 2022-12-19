@@ -62,7 +62,7 @@ class TransactionCard extends StatelessWidget {
                       ),
                       ...transaction.tags.map((tagLabel) {
                         return TagChip(label: tagLabel);
-                      }),
+                      }).toList(),
                     ],
                   ),
                 ],

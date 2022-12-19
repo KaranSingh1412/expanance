@@ -2,14 +2,15 @@ import 'package:hive/hive.dart';
 import 'package:flutter/cupertino.dart';
 
 class DefinedTagsProvider extends ChangeNotifier {
-  List<String> get definedTags {
-    return Hive.box<String>("definedTags").keys.toList() as List<String>;
+  List<dynamic> get definedTags {
+    return Hive.box<String>("definedTags").keys.toList();
   }
 
   static Future<void> createDefinedTagsBox() async {
     await Hive.openBox<String>("definedTags");
-    Hive.box<String>("definedTags").put("all", "");
-    Hive.box<String>("definedTags").put("once", "");
+    if (Hive.box<String>("definedTags").isEmpty) {
+      Hive.box<String>("definedTags").put("once", "");
+    }
   }
 
   void addDefinedTag(String tag) {

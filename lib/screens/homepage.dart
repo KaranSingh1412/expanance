@@ -14,8 +14,6 @@ import 'package:provider/provider.dart';
  * - add animation list
  * - add multiple bank accounts
  * - add app drawer
- * - replace dropdown with tabbar
- * - replace datetime button with Icon calendar button
  * - addTags functionality
  * - rework transactiontype_button.dart
  * - fix scroll bug
@@ -23,6 +21,7 @@ import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+  static List<DBTransaction> transactionList = []; //list of transactions
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -30,9 +29,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   double totalAmount = 0.0; // the total amount
-  List<String> items = ["all", "once", "monthly"]; //item filters
-  String initialDropdownValue = "all"; //current item filter (initial)
-  List<DBTransaction> transactionList = []; //list of transactions
 
   @override
   void initState() {
@@ -43,7 +39,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() {
     final transactionProv = Provider.of<TransactionProvider>(context);
-    transactionList =
+    HomePage.transactionList =
         transactionProv.transactions; //get the transactions from the provider
     super.didChangeDependencies();
   }
@@ -137,47 +133,7 @@ class _HomePageState extends State<HomePage> {
                               : FontWeight.normal,
                         ),
                   ),
-                  CustomTabbar(
-                    onChanged: () {
-                      /*setState(
-                        () {
-                          initialDropdownValue = value!;
-                          if (value == "all") {
-                            transactionList = transactionProv.transactions;
-                          } else {
-                            transactionList = transactionProv.transactions
-                                .where(
-                                    (element) => element.tags.contains(value))
-                                .toList();
-                          }
-                        },
-                      );*/
-                    },
-                  ),
-                  /*DropdownButton(
-                    value: initialDropdownValue,
-                    items: items
-                        .map((e) => DropdownMenuItem<String>(
-                              value: e,
-                              child: Text(e),
-                            ))
-                        .toList(),
-                    onChanged: (String? value) {
-                      setState(
-                        () {
-                          initialDropdownValue = value!;
-                          if (value == "all") {
-                            transactionList = transactionProv.transactions;
-                          } else {
-                            transactionList = transactionProv.transactions
-                                .where(
-                                    (element) => element.tags.contains(value))
-                                .toList();
-                          }
-                        },
-                      );
-                    },
-                  ),*/
+                  const CustomTabbar(),
                 ],
               ),
             ),
@@ -189,13 +145,13 @@ class _HomePageState extends State<HomePage> {
                     builder: (context, _) => SizedBox(
                       child: ListView.builder(
                         itemBuilder: (context, index) {
-                          return transactionList.isNotEmpty
+                          return HomePage.transactionList.isNotEmpty
                               ? TransactionCard(
-                                  transaction: transactionList[index],
+                                  transaction: HomePage.transactionList[index],
                                 )
                               : const SizedBox();
                         },
-                        itemCount: transactionList.length,
+                        itemCount: HomePage.transactionList.length,
                       ),
                     ),
                   ),

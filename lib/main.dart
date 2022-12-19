@@ -1,4 +1,3 @@
-import 'package:finance_app/models/db_models/db_transaction.dart';
 import 'package:finance_app/provider/defined_tags_provider.dart';
 import 'package:finance_app/provider/transaction_provider.dart';
 import 'package:finance_app/screens/homepage.dart';

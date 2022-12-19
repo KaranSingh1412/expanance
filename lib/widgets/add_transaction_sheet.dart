@@ -1,4 +1,5 @@
 import 'package:finance_app/models/db_models/db_transaction.dart';
+import 'package:finance_app/provider/defined_tags_provider.dart';
 import 'package:finance_app/provider/transaction_provider.dart';
 import 'package:finance_app/widgets/modal_button.dart';
 import 'package:finance_app/widgets/modal_textfield.dart';
@@ -61,6 +62,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final definedTagsProv = Provider.of<DefinedTagsProvider>(context);
     return Container(
       height: 500,
       decoration: BoxDecoration(
@@ -145,14 +147,10 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      TagCircle(
-                        label: "monthly",
-                        tagList: transactionTags,
-                      ),
-                      TagCircle(
-                        label: "once",
-                        tagList: transactionTags,
-                      ),
+                      ...definedTagsProv.definedTags
+                          .map((tagLabel) => TagCircle(
+                              label: tagLabel, tagList: transactionTags))
+                          .toList(),
                     ],
                   ),
                 )
