@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                           color: totalAmount < 0
                               ? Colors.red.shade700
-                              : Colors.black,
+                              : Colors.white,
                           fontWeight: totalAmount < 0
                               ? FontWeight.w500
                               : FontWeight.normal,

@@ -8,6 +8,14 @@ import 'package:provider/provider.dart';
 class CustomTabbar extends StatelessWidget {
   const CustomTabbar({Key? key}) : super(key: key);
 
+  _addNewTag(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return Container();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final definedTagsProv = Provider.of<DefinedTagsProvider>(context);
@@ -38,7 +46,8 @@ class CustomTabbar extends StatelessWidget {
                   },
                 ).toList(),
                 IconButton(
-                  onPressed: () {}, //open dialog window and add tag
+                  onPressed:
+                      _addNewTag(context), //open dialog window and add tag
                   icon: const Icon(Icons.add),
                   iconSize: 15,
                   splashRadius: 16,
