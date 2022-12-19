@@ -3,7 +3,7 @@
   "short_name": "finance_app",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#BAF2BB",
+  "background_color": "#190033",
   "theme_color": "#0175C2",
   "description": "A new Flutter project.",
   "orientation": "portrait-primary",
