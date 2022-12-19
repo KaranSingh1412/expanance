@@ -18,6 +18,7 @@ import 'package:provider/provider.dart';
  * - replace datetime button with Icon calendar button
  * - addTags functionality
  * - rework transactiontype_button.dart
+ * - fix scroll bug
  */
 
 class HomePage extends StatefulWidget {
