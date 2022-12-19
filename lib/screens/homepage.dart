@@ -89,11 +89,6 @@ class _HomePageState extends State<HomePage> {
               ),
         ),
         centerTitle: true,
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          systemNavigationBarColor: Colors.black,
-          statusBarColor: Colors.black,
-          statusBarBrightness: Brightness.light,
-        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.primary,
