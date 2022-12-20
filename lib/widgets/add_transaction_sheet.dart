@@ -126,32 +126,48 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          _selectDate(context);
-                        },
-                        icon: const Icon(Icons.calendar_month_rounded),
+                  child: GestureDetector(
+                    onTap: () => _selectDate(context),
+                    child: Card(
+                      margin: const EdgeInsets.all(13.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      Text(
-                        DateFormat.yMMMd().format(selectedDate),
+                      color: Theme.of(context).colorScheme.surface,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const IconButton(
+                            onPressed: null,
+                            icon: Icon(Icons.calendar_month_rounded),
+                            disabledColor: Colors.white,
+                          ),
+                          Text(
+                            DateFormat.yMMMd().format(selectedDate),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
                 Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ...definedTagsProv.definedTags
-                          .map((tagLabel) => TagCircle(
-                              label: tagLabel, tagList: transactionTags))
-                          .toList(),
-                    ],
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ...definedTagsProv.definedTags
+                            .map(
+                              (tagLabel) => TagCircle(
+                                label: tagLabel,
+                                tagList: transactionTags,
+                              ),
+                            )
+                            .toList(),
+                      ],
+                    ),
                   ),
                 )
               ],

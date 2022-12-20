@@ -1,10 +1,9 @@
-import 'package:finance_app/models/db_models/db_transaction.dart';
+import 'package:finance_app/provider/hometransactions_provider.dart';
 import 'package:finance_app/provider/transaction_provider.dart';
 import 'package:finance_app/widgets/add_transaction_sheet.dart';
 import 'package:finance_app/widgets/custom_tabbar.dart';
 import 'package:finance_app/widgets/transaction_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
@@ -17,11 +16,12 @@ import 'package:provider/provider.dart';
  * - addTags functionality
  * - rework transactiontype_button.dart
  * - fix scroll bug
+ * - add monthly transactions
+ * - add planned transactions
  */
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
-  static List<DBTransaction> transactionList = []; //list of transactions
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -36,12 +36,14 @@ class _HomePageState extends State<HomePage> {
     initializeDateFormatting();
   }
 
+  // UNBEDINGT FIXXEN!!! TODO
   @override
-  void didChangeDependencies() {
+  void didUpdateWidget(covariant HomePage oldWidget) {
     final transactionProv = Provider.of<TransactionProvider>(context);
-    HomePage.transactionList =
-        transactionProv.transactions; //get the transactions from the provider
-    super.didChangeDependencies();
+    final homeTransactionsProv = Provider.of<HomeTransactionsProvider>(context);
+    homeTransactionsProv
+        .updateHomeTransactionsList(transactionProv.transactions);
+    super.didUpdateWidget(oldWidget);
   }
 
   ///opens the form for creating/adding a new transaction
@@ -68,6 +70,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final transactionProv = Provider.of<TransactionProvider>(context);
+    final homeTransactionsProv = Provider.of<HomeTransactionsProvider>(context);
     if (mounted) {
       totalAmount = transactionProv.transactions
           .map((element) => element.amount)
@@ -128,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                               : FontWeight.normal,
                         ),
                   ),
-                  CustomTabbar(),
+                  const CustomTabbar(),
                 ],
               ),
             ),
@@ -140,31 +143,36 @@ class _HomePageState extends State<HomePage> {
                     builder: (context, _) => SizedBox(
                       child: ListView.builder(
                         itemBuilder: (context, index) {
-                          return HomePage.transactionList.isNotEmpty
+                          return homeTransactionsProv
+                                  .homeTransactions.isNotEmpty
                               ? TransactionCard(
-                                  transaction: HomePage.transactionList[index],
+                                  transaction: homeTransactionsProv
+                                      .homeTransactions[index],
                                 )
                               : const SizedBox();
                         },
-                        itemCount: HomePage.transactionList.length,
+                        itemCount: homeTransactionsProv.homeTransactions.length,
                       ),
                     ),
                   ),
                 )
-              : Column(
-                  children: [
-                    Icon(
-                      Icons.attach_money_rounded,
-                      color: Colors.grey.shade500,
-                      size: 60,
-                    ),
-                    Text(
-                      "No Transactions yet",
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            color: Colors.grey.shade500,
-                          ),
-                    ),
-                  ],
+              : Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.attach_money_rounded,
+                        color: Colors.grey.shade500,
+                        size: 60,
+                      ),
+                      Text(
+                        "No Transactions yet",
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: Colors.grey.shade500,
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:finance_app/provider/defined_tags_provider.dart';
+import 'package:finance_app/provider/hometransactions_provider.dart';
 import 'package:finance_app/provider/transaction_provider.dart';
-import 'package:finance_app/screens/homepage.dart';
 import 'package:finance_app/widgets/modal_button.dart';
 import 'package:finance_app/widgets/modal_textfield.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,8 @@ class _CustomTabbarState extends State<CustomTabbar> {
   final TextEditingController _tagNameController = TextEditingController();
 
   _addNewTag(BuildContext context) async {
-    final definedTagsProv = Provider.of<DefinedTagsProvider>(context);
+    final definedTagsProv =
+        Provider.of<DefinedTagsProvider>(context, listen: false);
     await showDialog(
       context: context,
       builder: (_) {
@@ -30,7 +31,6 @@ class _CustomTabbarState extends State<CustomTabbar> {
             height: 180,
             width: 300,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ModalTextField(
                   label: "Enter a name for the Tag",
@@ -60,11 +60,14 @@ class _CustomTabbarState extends State<CustomTabbar> {
                       child: ModalButton(
                         label: "Enter",
                         buttonPressed: () {
-                          if (_tagNameController.text.isNotEmpty) {
+                          if (_tagNameController.text.isNotEmpty &&
+                              definedTagsProv.definedTags.length <= 7) {
                             definedTagsProv
                                 .addDefinedTag(_tagNameController.text);
                             Navigator.pop(context);
-                            setState(() {});
+                            setState(() {
+                              _tagNameController.text = "";
+                            });
                           }
                         },
                       ),
@@ -82,6 +85,7 @@ class _CustomTabbarState extends State<CustomTabbar> {
   @override
   Widget build(BuildContext context) {
     final definedTagsProv = Provider.of<DefinedTagsProvider>(context);
+    final homeTransactionProv = Provider.of<HomeTransactionsProvider>(context);
     final transactionProv = Provider.of<TransactionProvider>(context);
     return SizedBox(
       child: SingleChildScrollView(
@@ -92,7 +96,8 @@ class _CustomTabbarState extends State<CustomTabbar> {
               children: [
                 ModalButton(
                   buttonPressed: () {
-                    HomePage.transactionList = transactionProv.transactions;
+                    homeTransactionProv.updateHomeTransactionsList(
+                        transactionProv.transactions);
                   },
                   label: "all",
                 ),
@@ -100,21 +105,27 @@ class _CustomTabbarState extends State<CustomTabbar> {
                   (tab) {
                     return ModalButton(
                       buttonPressed: () {
-                        HomePage.transactionList = transactionProv.transactions
-                            .where((element) => element.tags.contains(tab))
-                            .toList();
+                        homeTransactionProv.updateHomeTransactionsList(
+                          transactionProv.transactions
+                              .where(
+                                (element) => element.tags.contains(tab),
+                              )
+                              .toList(),
+                        );
                       },
                       label: tab,
                     );
                   },
                 ).toList(),
-                IconButton(
-                  onPressed: () =>
-                      _addNewTag(context), //open dialog window and add tag
-                  icon: const Icon(Icons.add),
-                  iconSize: 15,
-                  splashRadius: 16,
-                ),
+                definedTagsProv.definedTags.length <= 7
+                    ? IconButton(
+                        onPressed: () => _addNewTag(
+                            context), //open dialog window and add tag
+                        icon: const Icon(Icons.add),
+                        iconSize: 15,
+                        splashRadius: 16,
+                      )
+                    : const SizedBox(),
               ],
             ),
           ],
@@ -123,3 +134,5 @@ class _CustomTabbarState extends State<CustomTabbar> {
     );
   }
 }
+
+//transactionProv.transactions.where((element) => element.tags.contains(tab)).toList();

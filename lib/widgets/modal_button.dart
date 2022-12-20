@@ -6,7 +6,7 @@ class ModalButton extends StatelessWidget {
       : super(key: key);
 
   final String label;
-  final void Function() buttonPressed;
+  final void Function()? buttonPressed;
 
   @override
   Widget build(BuildContext context) {
