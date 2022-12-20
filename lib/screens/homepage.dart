@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                               : FontWeight.normal,
                         ),
                   ),
-                  const CustomTabbar(),
+                  CustomTabbar(),
                 ],
               ),
             ),

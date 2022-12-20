@@ -8,12 +8,14 @@ class ModalTextField extends StatefulWidget {
     required this.submitter,
     required this.icon,
     this.inputType = TextInputType.text,
+    this.validationCallback,
   }) : super(key: key);
   final String label;
   final TextEditingController controller;
   final Function submitter;
   final IconData icon;
   final TextInputType inputType;
+  final Function(String?)? validationCallback;
 
   @override
   State<ModalTextField> createState() => _ModalTextFieldState();
@@ -43,6 +45,15 @@ class _ModalTextFieldState extends State<ModalTextField> {
             style: Theme.of(context).textTheme.bodyMedium,
             controller: widget.controller,
             onFieldSubmitted: (_) => widget.submitter,
+            validator: (value) {
+              if (value != null && value.isEmpty) {
+                return "Please type something!";
+              }
+              if (widget.validationCallback != null) {
+                return widget.validationCallback!(value);
+              }
+              return null;
+            },
             decoration: InputDecoration(
               fillColor: Theme.of(context).colorScheme.surface,
               filled: true,

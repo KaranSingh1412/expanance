@@ -19,7 +19,7 @@ class MyThemes {
       shadow: Colors.transparent,
       surface: _surfaceColor,
     ),
-    dialogTheme: const DialogTheme(backgroundColor: _surfaceColor),
+    dialogTheme: const DialogTheme(backgroundColor: _backgroundColor),
     snackBarTheme: const SnackBarThemeData(
       backgroundColor: _secondaryColor,
       contentTextStyle: TextStyle(
