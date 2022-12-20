@@ -6,8 +6,14 @@ import 'package:finance_app/widgets/modal_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CustomTabbar extends StatelessWidget {
-  CustomTabbar({Key? key}) : super(key: key);
+class CustomTabbar extends StatefulWidget {
+  const CustomTabbar({Key? key}) : super(key: key);
+
+  @override
+  State<CustomTabbar> createState() => _CustomTabbarState();
+}
+
+class _CustomTabbarState extends State<CustomTabbar> {
   final TextEditingController _tagNameController = TextEditingController();
 
   _addNewTag(BuildContext context) async {
@@ -54,10 +60,11 @@ class CustomTabbar extends StatelessWidget {
                       child: ModalButton(
                         label: "Enter",
                         buttonPressed: () {
-                          if (_tagNameController.text.isEmpty) {
-                          } else {
+                          if (_tagNameController.text.isNotEmpty) {
                             definedTagsProv
                                 .addDefinedTag(_tagNameController.text);
+                            Navigator.pop(context);
+                            setState(() {});
                           }
                         },
                       ),
