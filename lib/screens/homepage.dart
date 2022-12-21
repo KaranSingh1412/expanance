@@ -27,12 +27,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   double totalAmount = 0.0; // the total amount
-  final List<DBTransaction> homeTransactions = [];
+  List<DBTransaction> homeTransactions = [];
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final transactionProv = Provider.of<TransactionProvider>(context);
+    homeTransactions = transactionProv.transactions;
+    super.didChangeDependencies();
   }
 
   ///opens the form for creating/adding a new transaction
@@ -120,8 +127,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                   ),
                   CustomTabbar(
-                    tagButtonCallback: (String tab) =>
-                        transactionProv.getTransactions(tab),
+                    tagButtonCallback: (String tab) => setState(() {
+                      homeTransactions = transactionProv.getTransactions(tab);
+                    }),
                   ),
                 ],
               ),
