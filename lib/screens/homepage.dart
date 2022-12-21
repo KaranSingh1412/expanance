@@ -1,4 +1,4 @@
-import 'package:finance_app/provider/hometransactions_provider.dart';
+import 'package:finance_app/models/db_models/db_transaction.dart';
 import 'package:finance_app/provider/transaction_provider.dart';
 import 'package:finance_app/widgets/add_transaction_sheet.dart';
 import 'package:finance_app/widgets/custom_tabbar.dart';
@@ -9,11 +9,9 @@ import 'package:provider/provider.dart';
 
 /**
  * TODO:
- * - error handling in addtransaction sheet
  * - add animation list
  * - add multiple bank accounts
  * - add app drawer
- * - addTags functionality
  * - rework transactiontype_button.dart
  * - fix scroll bug
  * - add monthly transactions
@@ -29,21 +27,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   double totalAmount = 0.0; // the total amount
+  final List<DBTransaction> homeTransactions = [];
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting();
-  }
-
-  // UNBEDINGT FIXXEN!!! TODO
-  @override
-  void didUpdateWidget(covariant HomePage oldWidget) {
-    final transactionProv = Provider.of<TransactionProvider>(context);
-    final homeTransactionsProv = Provider.of<HomeTransactionsProvider>(context);
-    homeTransactionsProv
-        .updateHomeTransactionsList(transactionProv.transactions);
-    super.didUpdateWidget(oldWidget);
   }
 
   ///opens the form for creating/adding a new transaction
@@ -70,7 +59,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final transactionProv = Provider.of<TransactionProvider>(context);
-    final homeTransactionsProv = Provider.of<HomeTransactionsProvider>(context);
     if (mounted) {
       totalAmount = transactionProv.transactions
           .map((element) => element.amount)
@@ -131,7 +119,10 @@ class _HomePageState extends State<HomePage> {
                               : FontWeight.normal,
                         ),
                   ),
-                  const CustomTabbar(),
+                  CustomTabbar(
+                    tagButtonCallback: (String tab) =>
+                        transactionProv.getTransactions(tab),
+                  ),
                 ],
               ),
             ),
@@ -143,15 +134,13 @@ class _HomePageState extends State<HomePage> {
                     builder: (context, _) => SizedBox(
                       child: ListView.builder(
                         itemBuilder: (context, index) {
-                          return homeTransactionsProv
-                                  .homeTransactions.isNotEmpty
+                          return homeTransactions.isNotEmpty
                               ? TransactionCard(
-                                  transaction: homeTransactionsProv
-                                      .homeTransactions[index],
+                                  transaction: homeTransactions[index],
                                 )
                               : const SizedBox();
                         },
-                        itemCount: homeTransactionsProv.homeTransactions.length,
+                        itemCount: homeTransactions.length,
                       ),
                     ),
                   ),

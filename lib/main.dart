@@ -1,5 +1,4 @@
 import 'package:finance_app/provider/defined_tags_provider.dart';
-import 'package:finance_app/provider/hometransactions_provider.dart';
 import 'package:finance_app/provider/transaction_provider.dart';
 import 'package:finance_app/screens/homepage.dart';
 import 'package:finance_app/utils/my_themes.dart';
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => TransactionProvider()),
         ChangeNotifierProvider(create: (_) => DefinedTagsProvider()),
-        ChangeNotifierProvider(create: (_) => HomeTransactionsProvider()),
       ],
       builder: (context, _) => MaterialApp(
         title: 'Expanance',

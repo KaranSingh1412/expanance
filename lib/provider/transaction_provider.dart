@@ -25,4 +25,14 @@ class TransactionProvider extends ChangeNotifier {
     Hive.box<DBTransaction>("transactions").delete(transaction.key);
     notifyListeners();
   }
+
+  List<DBTransaction> getTransactions(String tag) {
+    if (tag == "all") {
+      return transactions;
+    } else {
+      return transactions
+          .where((element) => element.tags.contains(tag))
+          .toList();
+    }
+  }
 }

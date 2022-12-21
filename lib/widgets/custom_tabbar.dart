@@ -1,5 +1,4 @@
 import 'package:finance_app/provider/defined_tags_provider.dart';
-import 'package:finance_app/provider/hometransactions_provider.dart';
 import 'package:finance_app/provider/transaction_provider.dart';
 import 'package:finance_app/widgets/modal_button.dart';
 import 'package:finance_app/widgets/modal_textfield.dart';
@@ -7,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CustomTabbar extends StatefulWidget {
-  const CustomTabbar({Key? key}) : super(key: key);
+  const CustomTabbar({Key? key, required this.tagButtonCallback})
+      : super(key: key);
+  final void Function(String) tagButtonCallback;
 
   @override
   State<CustomTabbar> createState() => _CustomTabbarState();
@@ -85,7 +86,6 @@ class _CustomTabbarState extends State<CustomTabbar> {
   @override
   Widget build(BuildContext context) {
     final definedTagsProv = Provider.of<DefinedTagsProvider>(context);
-    final homeTransactionProv = Provider.of<HomeTransactionsProvider>(context);
     final transactionProv = Provider.of<TransactionProvider>(context);
     return SizedBox(
       child: SingleChildScrollView(
@@ -95,24 +95,13 @@ class _CustomTabbarState extends State<CustomTabbar> {
             Row(
               children: [
                 ModalButton(
-                  buttonPressed: () {
-                    homeTransactionProv.updateHomeTransactionsList(
-                        transactionProv.transactions);
-                  },
+                  buttonPressed: () => widget.tagButtonCallback("all"),
                   label: "all",
                 ),
                 ...definedTagsProv.definedTags.map(
                   (tab) {
                     return ModalButton(
-                      buttonPressed: () {
-                        homeTransactionProv.updateHomeTransactionsList(
-                          transactionProv.transactions
-                              .where(
-                                (element) => element.tags.contains(tab),
-                              )
-                              .toList(),
-                        );
-                      },
+                      buttonPressed: () => widget.tagButtonCallback(tab),
                       label: tab,
                     );
                   },
