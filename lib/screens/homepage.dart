@@ -1,9 +1,12 @@
 import 'package:finance_app/models/db_models/db_transaction.dart';
 import 'package:finance_app/provider/transaction_provider.dart';
+import 'package:finance_app/screens/monthly_transactions.dart';
 import 'package:finance_app/widgets/add_transaction_sheet.dart';
+import 'package:finance_app/widgets/custom_appbar.dart';
 import 'package:finance_app/widgets/custom_tabbar.dart';
 import 'package:finance_app/widgets/transaction_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
@@ -72,21 +75,29 @@ class _HomePageState extends State<HomePage> {
           .fold(0, (value, element) => value + element);
     }
     return Scaffold(
-      //drawer: Drawer(),
-      appBar: AppBar(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(15),
-            bottomRight: Radius.circular(15),
-          ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: const Text("Home"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text("Monthly Page"),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MonthlyPage()));
+              },
+            ),
+          ],
         ),
-        title: Text(
-          "Expanance",
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w400,
-              ),
-        ),
-        centerTitle: true,
+      ),
+      appBar: const CustomAppbar(
+        title: "Expanance",
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.primary,

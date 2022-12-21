@@ -35,6 +35,15 @@ class MyThemes {
       backgroundColor: _primaryColor,
       shadowColor: Colors.transparent,
     ),
+    drawerTheme: const DrawerThemeData(
+      backgroundColor: _backgroundColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(15.0),
+          bottomRight: Radius.circular(15.0),
+        ),
+      ),
+    ),
     bottomAppBarTheme: const BottomAppBarTheme(color: _backgroundColor),
     navigationBarTheme: const NavigationBarThemeData(
       backgroundColor: _primaryColor,
